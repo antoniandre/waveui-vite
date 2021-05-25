@@ -19,6 +19,7 @@
     "wave-ui": "^2.19.1"
   },
   "devDependencies": {
+    "@mdi/font": "^5.9.55",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.2.5",

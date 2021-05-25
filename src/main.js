@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import App from './app.vue'
+import router from './router'
 import WaveUI from 'wave-ui'
 import 'wave-ui/dist/wave-ui.css'
-import router from './router'
+import '@mdi/font/css/materialdesignicons.min.css'
 
 import SshPre from 'simple-syntax-highlighter'
 import 'simple-syntax-highlighter/dist/sshpre.css'
