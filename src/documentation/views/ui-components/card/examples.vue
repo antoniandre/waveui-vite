@@ -165,7 +165,7 @@ div
       &lt;/w-card&gt;
     template(#js).
       data: () => ({
-        // With Webpack or Vue CLI, you can also use `import.meta.env.BASE_URL`
+        // With Webpack or Vue CLI, you can also use `process.env.BASE_URL`
         // if the image is in the public/ folder.
         baseUrl: 'https://antoniandre.github.io/wave-ui/'
       })
@@ -200,7 +200,7 @@ div
       &lt;/w-card&gt;
     template(#js).
       data: () => ({
-        // With Webpack or Vue CLI, you can also use import.meta.env.BASE_URL
+        // With Webpack or Vue CLI, you can also use process.env.BASE_URL
         // if the image is in the public/ folder.
         baseUrl: 'https://antoniandre.github.io/wave-ui/'
       })
@@ -209,7 +209,7 @@ div
 <script>
 export default {
   data: () => ({
-    baseUrl: import.meta.env.BASE_URL
+    baseUrl: process.env.BASE_URL
   })
 }
 </script>
