@@ -1,7 +1,11 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()]
+  plugins: [vue()], // https://vitejs.dev/config/
+  css: {
+    preprocessorOptions: {
+      scss: { additionalData: `@import "./src/wave-ui/scss/variables";@import "@/documentation/scss/_variables.scss";` }
+    }
+  }
 })
