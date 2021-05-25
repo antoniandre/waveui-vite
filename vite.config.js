@@ -1,6 +1,6 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from "path"
+import { resolve } from 'path'
 
 export default defineConfig({
   define: {
@@ -12,12 +12,14 @@ export default defineConfig({
   plugins: [vue()], // https://vitejs.dev/config/
   css: {
     preprocessorOptions: {
-      scss: { additionalData: `@import "./src/wave-ui/scss/variables";@import "@/documentation/scss/_variables.scss";` }
+      scss: {
+        additionalData: `@import "./src/wave-ui/scss/variables";@import "@/documentation/scss/_variables.scss";`
+      }
     }
   },
   resolve: {
     alias: {
-      "@": resolve(__dirname, "/src")
+      '@': resolve(__dirname, '/src')
     }
   },
   build: {
