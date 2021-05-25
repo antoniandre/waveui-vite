@@ -1,15 +1,12 @@
-<template>
-<w-app>
-  <w-button>Test</w-button>
-</w-app>
+<template lang="pug">
+router-view.grow(v-if="$route.name === 'home'")
+documentation(v-else)
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Documentation from '@/documentation/index.vue'
+
+export default {
+  components: { Documentation }
 }
-</style>
+</script>
