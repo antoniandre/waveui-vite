@@ -24,10 +24,16 @@
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.2.5",
     "axios": "^0.21.1",
+    "font-awesome": "4",
     "gsap": "^3.6.1",
+    "ionicons": "4",
+    "material-design-icons": "^3.0.1",
     "sass": "^1.34.0",
     "simple-syntax-highlighter": "^2.0.5",
+    "splitpanes": "^3.0.4",
     "vite": "^2.3.3",
-    "vite-plugin-pug": "^0.3.0"
+    "vite-plugin-pug": "^0.3.0",
+    "vue-cal": "^4.2.0",
+    "vueperslides": "^3.3.0"
   }
 }

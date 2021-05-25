@@ -6,13 +6,19 @@ specifiers:
   '@vue/compiler-sfc': ^3.0.5
   autoprefixer: ^10.2.5
   axios: ^0.21.1
+  font-awesome: '4'
   gsap: ^3.6.1
+  ionicons: '4'
+  material-design-icons: ^3.0.1
   sass: ^1.34.0
   simple-syntax-highlighter: ^2.0.5
+  splitpanes: ^3.0.4
   vite: ^2.3.3
   vite-plugin-pug: ^0.3.0
   vue: ^3.0.5
+  vue-cal: ^4.2.0
   vue-router: ^4.0.8
+  vueperslides: ^3.3.0
   wave-ui: ^2.19.1
 
 dependencies:
@@ -26,11 +32,17 @@ devDependencies:
   '@vue/compiler-sfc': 3.0.11_vue@3.0.11
   autoprefixer: 10.2.5
   axios: 0.21.1
+  font-awesome: 4.7.0
   gsap: 3.6.1
+  ionicons: 4.6.3
+  material-design-icons: 3.0.1
   sass: 1.34.0
   simple-syntax-highlighter: 2.0.5
+  splitpanes: 3.0.4
   vite: 2.3.3
   vite-plugin-pug: 0.3.0_vite@2.3.3
+  vue-cal: 4.2.0
+  vueperslides: 3.3.0
 
 packages:
 
@@ -323,6 +335,11 @@ packages:
         optional: true
     dev: true
 
+  /font-awesome/4.7.0:
+    resolution: {integrity: sha1-j6jPBBGhoxr9B7BtKQK7n8gVoTM=}
+    engines: {node: '>=0.10.3'}
+    dev: true
+
   /fraction.js/4.1.1:
     resolution: {integrity: sha512-MHOhvvxHTfRFpF1geTK9czMIZ6xclsEor2wkIGYYq+PxcQqT7vStJqjhe6S1TenZrMZzo+wlqOufBDVepUEgPg==}
     dev: true
@@ -390,6 +407,10 @@ packages:
       postcss: ^8.1.0
     dependencies:
       postcss: 8.3.0
+    dev: true
+
+  /ionicons/4.6.3:
+    resolution: {integrity: sha512-cgP+VIr2cTJpMfFyVHTerq6n2jeoiGboVoe3GlaAo5zoSBDAEXORwUZhv6m+lCyxlsHCS3nqPUE+MKyZU71t8Q==}
     dev: true
 
   /is-binary-path/2.1.0:
@@ -482,6 +503,10 @@ packages:
     resolution: {integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==}
     dependencies:
       sourcemap-codec: 1.4.8
+    dev: true
+
+  /material-design-icons/3.0.1:
+    resolution: {integrity: sha1-mnHEh0chjrylHlGmbaaCA4zct78=}
     dev: true
 
   /merge-source-map/1.1.0:
@@ -750,6 +775,10 @@ packages:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
     dev: true
 
+  /splitpanes/3.0.4:
+    resolution: {integrity: sha512-KRaPtMDpu++OfvAzNQYE5U7WT5NoMA6l9B0buC4PhYoDILVLY8zN7Sp9cHXAgLhH59jI3lKzVoNqyf4OGRv7QQ==}
+    dev: true
+
   /string-hash/1.1.3:
     resolution: {integrity: sha1-6Kr8CsGFW0Zmkp7X3RJ1311sgRs=}
     dev: true
@@ -800,6 +829,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /vue-cal/4.2.0:
+    resolution: {integrity: sha512-oJPuIwluNzsu34o2PB8v80iwEt8BkAjLxHVnMtFopvoqQKwwKS/EKPj+TpoeFRILy2iUscDf86WukuGEm163ag==}
+    dev: true
+
   /vue-router/4.0.8_vue@3.0.11:
     resolution: {integrity: sha512-42mWSQaH7CCBQDspQTHv63f34VEnZC20g9QNK4WJ/zW8SdIUeT6TQ2i/78fjF/pVBUPLBWrGhvB7uDnaz7O/pA==}
     peerDependencies:
@@ -816,6 +849,10 @@ packages:
       '@vue/runtime-dom': 3.0.11
       '@vue/shared': 3.0.11
     dev: false
+
+  /vueperslides/3.3.0:
+    resolution: {integrity: sha512-YJoWwu620foHTwdZT21F6WXOujKvQpIJT6hQJcwPewE5+1mnbHi08r26hPdzdNOr6OyP7kyhdBe36zxhruSIWw==}
+    dev: true
 
   /wave-ui/2.19.1:
     resolution: {integrity: sha512-MgW89hP6FWw9Zk5FtfenXCzqow6MkfbAy+Cvg5V+oKfSk8AP4oNyjeZTARWwmbhta7Q10p6Ejwz01sjLuf9J9w==}
