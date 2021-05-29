@@ -9,7 +9,15 @@ export default defineConfig({
       VITE_APP_VERSION: process.env.npm_package_version
     }
   },
-  plugins: [vue()], // https://vitejs.dev/config/
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          whitespace: 'preserve'
+        }
+      }
+    })
+  ], // https://vitejs.dev/config/
   css: {
     preprocessorOptions: {
       scss: {
