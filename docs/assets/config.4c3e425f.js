@@ -1,0 +1,1 @@
+const s={breakpoints:{xs:600,sm:900,md:1200,lg:1700,xl:9999},css:{colorShades:!0,breakpointSpaces:!1,breakpointLayoutClasses:!0,grid:12},colors:{primary:"#234781",secondary:"#d3ebff",success:"#54b946",error:"#f65555",warning:"#f80",info:"#3d9ff5"},icons:[],iconsLigature:!1,presets:{}};export{s as c};

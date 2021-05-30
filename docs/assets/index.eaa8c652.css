@@ -1,0 +1,1 @@
+.w-dialog__content{display:flex;flex-direction:column;flex-grow:1;max-width:95%;overflow:auto;background-color:#fff}.w-dialog--fullscreen .w-dialog__content{flex:1 1 auto;height:100%;max-width:none}

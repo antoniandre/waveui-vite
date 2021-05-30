@@ -1,0 +1,1 @@
+import{o as t,c as e,w as s,a as l,f as r,r as a}from"./vendor.66ab2837.js";const i={class:"title1"};const o={props:["item"],render:function(o,c,d,n,u,f){const m=a("w-card");return t(),e(m,{"bg-color":"blue-light5",title:"Nested &lt;router-view&gt;","title-class":"title3"},{default:s((()=>[l("div",i,"Selected list item: "+r(d.item),1)])),_:1})}};export default o;
