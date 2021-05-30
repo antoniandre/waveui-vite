@@ -22,4 +22,6 @@ ___
 - [x] Run `build` the documentation
 - [x] Test a documentation `serve` with and without custom base
 - [x] Preserve whitespaces
-- [ ] Test the documentation on Github
+- [x] Test the documentation on Github
+- [x] Test test the redirection ghspa script on Github
+- [ ] Try Vite SSR
