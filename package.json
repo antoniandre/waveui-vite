@@ -10,9 +10,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base /waveui-vite/",
     "build-bundle": "BUNDLE=true vite build",
-    "serve": "vite preview --root docs"
+    "serve": "vite preview --root docs --base /waveui-vite/"
   },
   "dependencies": {
     "@vue/compiler-sfc": "3.1.0-beta.6",
