@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "build-bundle": "BUNDLE=true vite build",
+    "serve": "vite preview --root docs"
   },
   "dependencies": {
     "@vue/compiler-sfc": "3.1.0-beta.6",
@@ -28,6 +29,7 @@
     "gsap": "^3.6.1",
     "ionicons": "4",
     "material-design-icons": "^3.0.1",
+    "rollup-plugin-delete": "^2.0.0",
     "sass": "^1.34.0",
     "simple-syntax-highlighter": "^2.0.5",
     "splitpanes": "^3.0.4",
