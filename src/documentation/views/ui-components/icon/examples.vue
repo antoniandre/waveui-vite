@@ -653,14 +653,14 @@ export default {
     // Add ligature on the icons page for the demo.
     config.iconsLigature = 'material-icons'
   },
-  beforeUnmount () {
+  beforeDestroy () {
     config.iconsLigature = false
   }
 }
 </script>
 
 <style lang="scss">
-@import 'ionicons/dist/css/ionicons.min.css';
+@import '~ionicons/dist/css/ionicons.min.css';
 
 .icons-demo {
   .rotated-icon {width: 40px;}

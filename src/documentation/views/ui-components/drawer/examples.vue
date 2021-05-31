@@ -52,7 +52,7 @@ div
       &lt;/w-button&gt;
 
       &lt;w-drawer
-        :model-value="!!showDrawer"
+        :value="!!showDrawer"
         :[position]="true"
         @close="showDrawer = false"&gt;
         &lt;w-button

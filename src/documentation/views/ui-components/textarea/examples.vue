@@ -220,7 +220,7 @@ div
       outline
       disabled)
     w-textarea.mb4(
-      model-value="Some content"
+      value="Some content"
       label="Disabled & filled"
       outline
       disabled)
@@ -229,7 +229,7 @@ div
       outline
       readonly)
     w-textarea(
-      model-value="Some content"
+      value="Some content"
       label="Readonly & filled"
       outline
       readonly)
@@ -243,7 +243,7 @@ div
 
       &lt;w-textarea
         class="mb4"
-        model-value="Some content"
+        value="Some content"
         label="Disabled &amp; filled"
         outline
         disabled&gt;
@@ -257,7 +257,7 @@ div
       &lt;/w-textarea&gt;
 
       &lt;w-textarea
-        model-value="Some content"
+        value="Some content"
         label="Readonly &amp; filled"
         outline
         readonly&gt;

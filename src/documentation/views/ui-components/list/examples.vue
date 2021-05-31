@@ -114,12 +114,12 @@ div.lists-demo
     In that case, if you don't want to default to the primary color, you can explicitly set
     #[code selection-color] to a falsy value (false, null, or empty string), or another color.
   example
-    w-list(:model-value="[]" :items="listItems4" selection-color="pink" multiple)
+    w-list(:value="[]" :items="listItems4" selection-color="pink" multiple)
     //- template(#pug).
-      w-list(:model-value="[]" :items="items" selection-color="pink" multiple)
+      w-list(:value="[]" :items="items" selection-color="pink" multiple)
     template(#html).
       &lt;w-list
-        :model-value="[]"
+        :value="[]"
         :items="items"
         selection-color="pink"
         multiple&gt;
@@ -196,7 +196,7 @@ div.lists-demo
       })
 
   title-link(h2) Selectable list items
-  p If you provide a #[code v-model] or #[code model-value], the list items become selectable.
+  p If you provide a #[code v-model] or #[code value], the list items become selectable.
   example
     w-radios.mb6(v-model="multiple" :items="radios" inline)
     w-flex(wrap align-center)
@@ -205,7 +205,7 @@ div.lists-demo
         :items="listItems1"
         color="deep-purple"
         :multiple="multiple"
-        @itemClick="itemClicked = $event")
+        @item-click="itemClicked = $event")
       div(v-if="itemClicked")
         .title3 clicked item (#[span.code item-click] event):
         br

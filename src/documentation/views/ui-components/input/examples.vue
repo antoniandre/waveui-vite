@@ -212,34 +212,34 @@ div
     w-flex(wrap :gap="2")
       .grow.mb4(style="min-width: 200px")
         .title4.mb2 Underline style (default)
-        w-input.mb1(model-value="Some content")
-        w-input.mb1(color="red" model-value="Some content")
-        w-input.mb1(bg-color="red-light5" model-value="Some content")
-        w-input.mb1(color="red-dark1" bg-color="red-light5" model-value="Some content")
-        w-input.mb1(color="orange-dark1" bg-color="orange-light5" model-value="Some content")
+        w-input.mb1(value="Some content")
+        w-input.mb1(color="red" value="Some content")
+        w-input.mb1(bg-color="red-light5" value="Some content")
+        w-input.mb1(color="red-dark1" bg-color="red-light5" value="Some content")
+        w-input.mb1(color="orange-dark1" bg-color="orange-light5" value="Some content")
       .grow.mb4(style="min-width: 200px")
         .title4.mb2 Outline style
-        w-input.mb1(model-value="Some content" outline)
-        w-input.mb1(color="red" model-value="Some content" outline)
-        w-input.mb1(bg-color="red-light5" model-value="Some content" outline)
-        w-input.mb1(color="red-dark1" bg-color="red-light5" model-value="Some content" outline)
-        w-input.mb1(color="orange-dark1" bg-color="orange-light5" model-value="Some content" outline)
+        w-input.mb1(value="Some content" outline)
+        w-input.mb1(color="red" value="Some content" outline)
+        w-input.mb1(bg-color="red-light5" value="Some content" outline)
+        w-input.mb1(color="red-dark1" bg-color="red-light5" value="Some content" outline)
+        w-input.mb1(color="orange-dark1" bg-color="orange-light5" value="Some content" outline)
     //- template(#pug).
       w-flex(wrap :gap="2")
         .grow.mb4(style="min-width: 200px")
           .title4.mb2 Underline style (default)
-          w-input.mb1(model-value="Some content")
-          w-input.mb1(color="red" model-value="Some content")
-          w-input.mb1(bg-color="red-light5" model-value="Some content")
-          w-input.mb1(color="red-dark1" bg-color="red-light5" model-value="Some content")
-          w-input.mb1(color="orange-dark1" bg-color="orange-light5" model-value="Some content")
+          w-input.mb1(value="Some content")
+          w-input.mb1(color="red" value="Some content")
+          w-input.mb1(bg-color="red-light5" value="Some content")
+          w-input.mb1(color="red-dark1" bg-color="red-light5" value="Some content")
+          w-input.mb1(color="orange-dark1" bg-color="orange-light5" value="Some content")
         .grow.mb4(style="min-width: 200px")
           .title4.mb2 Outline style
-          w-input.mb1(model-value="Some content" outline)
-          w-input.mb1(color="red" model-value="Some content" outline)
-          w-input.mb1(bg-color="red-light5" model-value="Some content" outline)
-          w-input.mb1(color="red-dark1" bg-color="red-light5" model-value="Some content" outline)
-          w-input.mb1(color="orange-dark1" bg-color="orange-light5" model-value="Some content" outline)
+          w-input.mb1(value="Some content" outline)
+          w-input.mb1(color="red" value="Some content" outline)
+          w-input.mb1(bg-color="red-light5" value="Some content" outline)
+          w-input.mb1(color="red-dark1" bg-color="red-light5" value="Some content" outline)
+          w-input.mb1(color="orange-dark1" bg-color="orange-light5" value="Some content" outline)
     template(#html).
       &lt;w-flex wrap :gap="2"&gt;
         &lt;div class="grow mb4" style="min-width: 200px"&gt;
@@ -249,20 +249,20 @@ div
 
           &lt;w-input
             class="mb1"
-            model-value="Some content"&gt;
+            value="Some content"&gt;
           &lt;/w-input&gt;
 
           &lt;w-input
             class="mb1"
             color="red"
-            model-value="Some
+            value="Some
             content"&gt;
           &lt;/w-input&gt;
 
           &lt;w-input
             class="mb1"
             bg-color="red-light5"
-            model-value="Some
+            value="Some
             content"&gt;
           &lt;/w-input&gt;
 
@@ -270,14 +270,14 @@ div
             class="mb1"
             color="red-dark1"
             bg-color="red-light5"
-            model-value="Some content"&gt;
+            value="Some content"&gt;
           &lt;/w-input&gt;
 
           &lt;w-input
             class="mb1"
             color="orange-dark1"
             bg-color="orange-light5"
-            model-value="Some content"&gt;
+            value="Some content"&gt;
           &lt;/w-input&gt;
         &lt;/div&gt;
 
@@ -288,21 +288,21 @@ div
 
           &lt;w-input
             class="mb1"
-            model-value="Some content"
+            value="Some content"
             outline&gt;
           &lt;/w-input&gt;
 
           &lt;w-input
             class="mb1"
             color="red"
-            model-value="Some content"
+            value="Some content"
             outline&gt;
           &lt;/w-input&gt;
 
           &lt;w-input
             class="mb1"
             bg-color="red-light5"
-            model-value="Some content"
+            value="Some content"
             outline&gt;
           &lt;/w-input&gt;
 
@@ -310,7 +310,7 @@ div
             class="mb1"
             color="red-dark1"
             bg-color="red-light5"
-            model-value="Some content"
+            value="Some content"
             outline&gt;
           &lt;/w-input&gt;
 
@@ -318,7 +318,7 @@ div
             class="mb1"
             color="orange-dark1"
             bg-color="orange-light5"
-            model-value="Some content"
+            value="Some content"
             outline&gt;
           &lt;/w-input&gt;
         &lt;/div&gt;
@@ -551,14 +551,14 @@ div
   title-link(h2) Disabled &amp; readonly
   example
     w-input.mb3(label="Disabled & empty" outline disabled)
-    w-input.mb3(label="Disabled & filled" model-value="Some content" outline disabled)
+    w-input.mb3(label="Disabled & filled" value="Some content" outline disabled)
     w-input.mb3(label="Readonly & empty" outline readonly)
-    w-input.mb3(label="Readonly & filled" model-value="Some content" outline readonly)
+    w-input.mb3(label="Readonly & filled" value="Some content" outline readonly)
     //- template(#pug).
       w-input.mb3(label="Disabled & empty" outline disabled)
-      w-input.mb3(label="Disabled & filled" model-value="Some content" outline disabled)
+      w-input.mb3(label="Disabled & filled" value="Some content" outline disabled)
       w-input.mb3(label="Readonly & empty" outline readonly)
-      w-input.mb3(label="Readonly & filled" model-value="Some content" outline readonly)
+      w-input.mb3(label="Readonly & filled" value="Some content" outline readonly)
     template(#html).
       &lt;w-input
         class="mb3"
@@ -570,7 +570,7 @@ div
       &lt;w-input
         class="mb3"
         label="Disabled &amp; filled"
-        model-value="Some content"
+        value="Some content"
         outline
         disabled&gt;
       &lt;/w-input&gt;
@@ -585,7 +585,7 @@ div
       &lt;w-input
         class="mb3"
         label="Readonly &amp; filled"
-        model-value="Some content"
+        value="Some content"
         outline
         readonly&gt;
       &lt;/w-input&gt;

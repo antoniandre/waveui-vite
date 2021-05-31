@@ -349,7 +349,7 @@ div
             | The form has {{ form6.errorsCount }} errors.
       w-form.px8.pt2.pb12(
         v-model="form6.valid"
-        v-model:errors-count="form6.errorsCount"
+        :errors-count.sync="form6.errorsCount"
         @validate="onValidate"
         @success="onSuccess")
         w-input(required label="First name" :validators="[validators.required]")
@@ -400,7 +400,7 @@ div
         &lt;w-form
           class="px8 pt2 pb12"
           v-model="form.valid"
-          v-model:errors-count="form.errorsCount"
+          :errors-count.sync="form.errorsCount"
           @validate="onValidate"
           @success="onSuccess"&gt;
 

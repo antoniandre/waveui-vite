@@ -236,7 +236,7 @@ div
             template(#label="{ item }")
               code {{ item.label }}
           w-checkbox.mt2(
-            :model-value="dialog5.fullscreen === null ? fullscreenTransition : dialog5.fullscreen"
+            :value="dialog5.fullscreen === null ? fullscreenTransition : dialog5.fullscreen"
             @input="dialog5.fullscreen = $event"
             label="Fullscreen dialog")
     w-dialog(
@@ -286,7 +286,7 @@ div
             &lt;/w-radios&gt;
             &lt;w-checkbox
               class="mt2"
-              :model-value="dialog.fullscreen === null ? fullscreenTransition : dialog.fullscreen"
+              :value="dialog.fullscreen === null ? fullscreenTransition : dialog.fullscreen"
               @input="dialog.fullscreen = $event"
               label="Fullscreen dialog"&gt;
             &lt;/w-checkbox&gt;
