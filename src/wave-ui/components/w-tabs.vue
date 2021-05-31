@@ -12,7 +12,7 @@
       :aria-selected="item._index === activeTabIndex ? 'true' : 'false'"
       role="tab")
         slot(
-          v-if="$slots[`item-title.${item.id || i + 1}`]"
+          v-if="$scopedSlots[`item-title.${item.id || i + 1}`]"
           :name="`item-title.${item.id || i + 1}`"
           :item="getOriginalTab(item)"
           :index="i + 1"
@@ -24,14 +24,14 @@
           :index="i + 1"
           :active="item._index === activeTabIndex")
           div(v-html="item[itemTitleKey]")
-    .w-tabs__bar-extra(v-if="$slots['tabs-bar-extra']")
+    .w-tabs__bar-extra(v-if="$scopedSlots['tabs-bar-extra']")
       slot(name="tabs-bar-extra")
     .w-tabs__slider(v-if="!noSlider && !card" :class="sliderColor" :style="sliderStyles")
   .w-tabs__content-wrap(v-if="tabsItems.length")
     transition(:name="transitionName" :mode="transitionMode")
       .w-tabs__content(v-if="activeTab" :key="activeTab._index" :class="contentClass")
         slot(
-          v-if="$slots[`item-content.${activeTab.id || activeTab._index + 1}`]"
+          v-if="$scopedSlots[`item-content.${activeTab.id || activeTab._index + 1}`]"
           :name="`item-content.${activeTab.id || activeTab._index + 1}`"
           :item="getOriginalTab(activeTab)"
           :index="activeTab._index + 1"
@@ -46,13 +46,13 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import Vue from 'vue'
 
 export default {
   name: 'w-tabs',
 
   props: {
-    modelValue: { type: [Number, String] },
+    value: { type: [Number, String] },
     color: { type: String },
     bgColor: { type: String },
     items: { type: [Array, Number] },
@@ -100,7 +100,7 @@ export default {
     tabsItems () {
       const items = typeof this.items === 'number' ? Array(this.items).fill({}) : this.items
 
-      return items.map((item, _index) => reactive({
+      return items.map((item, _index) => new Vue.observable({
         ...item,
         _index,
         _disabled: !!item.disabled
@@ -192,7 +192,7 @@ export default {
   },
 
   beforeMount () {
-    this.updateActiveTab(this.modelValue)
+    this.updateActiveTab(this.value)
 
     this.$nextTick(() => {
       this.updateSlider()
@@ -203,12 +203,12 @@ export default {
     if (!this.noSlider) window.addEventListener('resize', this.onResize)
   },
 
-  beforeUnmount () {
+  beforeDestroy () {
     window.removeEventListener('resize', this.onResize)
   },
 
   watch: {
-    modelValue (index) {
+    value (index) {
       this.updateActiveTab(index)
     },
     items () {

@@ -98,7 +98,7 @@ export default {
     if (this.formRegister) this.formRegister(this)
   },
 
-  beforeUnmount () {
+  beforeDestroy () {
     if (this.formUnregister) this.formUnregister(this)
   }
 }

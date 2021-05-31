@@ -3,13 +3,13 @@ component(
   ref="formEl"
   :is="formRegister ? 'w-form-element' : 'div'"
   v-bind="formRegister && { validators, inputValue: selectionString, disabled: isDisabled, readonly: isReadonly }"
-  v-model:valid="valid"
+  :valid.sync="valid"
   @reset="onReset"
   :class="classes")
   template(v-if="labelPosition === 'left'")
-    label.w-select__label.w-select__label--left.w-form-el-shakable(v-if="$slots.default" :for="`w-select--${_.uid}`")
+    label.w-select__label.w-select__label--left.w-form-el-shakable(v-if="$slots.default" :for="`w-select--${_uid}`")
       slot
-    label.w-select__label.w-select__label--left.w-form-el-shakable(v-else-if="label" :for="`w-select--${_.uid}`" v-html="label")
+    label.w-select__label.w-select__label--left.w-form-el-shakable(v-else-if="label" :for="`w-select--${_uid}`" v-html="label")
 
   w-menu(
     v-model="showMenu"
@@ -28,26 +28,26 @@ component(
         role="button"
         aria-haspopup="listbox"
         :aria-expanded="showMenu ? 'true' : 'false'"
-        :aria-owns="`w-select-menu--${_.uid}`"
-        :aria-activedescendant="`w-select-menu--${_.uid}_item-1`"
+        :aria-owns="`w-select-menu--${_uid}`"
+        :aria-activedescendant="`w-select-menu--${_uid}_item-1`"
         :class="inputWrapClasses")
         w-icon.w-select__icon.w-select__icon--inner-left(
           v-if="innerIconLeft"
           tag="label"
-          :for="`w-select--${_.uid}`"
+          :for="`w-select--${_uid}`"
           @click="$emit('click:inner-icon-left', $event)") {{ innerIconLeft }}
-        .w-select__selection-slot(v-if="$slots.selection")
+        .w-select__selection-slot(v-if="$scopedSlots.selection")
           //- inputValue is always an array.
           slot(name="selection" :item="multiple ? inputValue : inputValue[0]")
         input.w-select__selection(
           ref="selection-input"
           type="text"
-          :value="$slots.selection ? '' : selectionString"
+          :value="$scopedSlots.selection ? '' : selectionString"
           @focus="!isDisabled && !isReadonly && onFocus($event)"
           @blur="onBlur"
           @keydown="!isDisabled && !isReadonly && onKeydown($event)"
-          :id="`w-select--${_.uid}`"
-          :placeholder="(!$slots.selection && placeholder) || null"
+          :id="`w-select--${_uid}`"
+          :placeholder="(!$scopedSlots.selection && placeholder) || null"
           :disabled="isDisabled || null"
           readonly
           aria-readonly="true"
@@ -63,43 +63,43 @@ component(
         template(v-if="labelPosition === 'inside' && showLabelInside")
           label.w-select__label.w-select__label--inside.w-form-el-shakable(
             v-if="$slots.default"
-            :for="`w-select--${_.uid}`"
+            :for="`w-select--${_uid}`"
             :class="isFocused && { [valid === false ? 'error' : color]: color || valid === false }")
             slot
           label.w-select__label.w-select__label--inside.w-form-el-shakable(
             v-else-if="label"
-            :for="`w-select--${_.uid}`"
+            :for="`w-select--${_uid}`"
             v-html="label"
             :class="isFocused && { [valid === false ? 'error' : color]: color || valid === false }")
         w-icon.w-select__icon.w-select__icon--inner-right(
           v-if="innerIconRight"
           tag="label"
-          :for="`w-select--${_.uid}`"
+          :for="`w-select--${_uid}`"
           @click="$emit('click:inner-icon-right', $event)") {{ innerIconRight }}
     w-list(
       ref="w-list"
-      :model-value="inputValue"
-      @update:model-value="onInput"
+      @input="onInput"
       @item-click="$emit('item-click', $event)"
       @item-select="onListItemSelect"
       @keydown:enter="noUnselect && !multiple && closeMenu()"
       @keydown:escape="closeMenu"
+      :value="inputValue"
       :items="selectItems"
       :multiple="multiple"
       arrows-navigation
       return-object
-      :add-ids="`w-select-menu--${_.uid}`"
       :no-unselect="noUnselect"
       :selection-color="selectionColor"
+      :add-ids="`w-select-menu--${_uid}`"
       role="listbox"
       tabindex="-1")
       template(#item="{ item, selected, index }")
         slot(name="item" :item="item" :selected="selected" :index="index") {{ item[itemLabelKey] }}
 
   template(v-if="labelPosition === 'right'")
-    label.w-select__label.w-select__label--right.w-form-el-shakable(v-if="$slots.default" :for="`w-select--${_.uid}`")
+    label.w-select__label.w-select__label--right.w-form-el-shakable(v-if="$slots.default" :for="`w-select--${_uid}`")
       slot
-    label.w-select__label.w-select__label--right.w-form-el-shakable(v-else-if="label" :for="`w-select--${_.uid}`" v-html="label")
+    label.w-select__label.w-select__label--right.w-form-el-shakable(v-else-if="label" :for="`w-select--${_uid}`" v-html="label")
 </template>
 
 <script>
@@ -115,7 +115,7 @@ export default {
 
   props: {
     items: { type: Array, required: true },
-    modelValue: {}, // v-model on selected item if any.
+    value: {}, // v-model on selected item if any.
     multiple: { type: Boolean },
     placeholder: { type: String },
     label: { type: String },
@@ -312,7 +312,7 @@ export default {
       setTimeout(() => {
         const itemIndex = this.inputValue.length ? this.inputValue[0].index : 0 // Real index starts at 0.
         // User visible index starts at 1.
-        this.$refs['w-list'].$el.querySelector(`#w-select-menu--${this._.uid}_item-${itemIndex + 1}`).focus()
+        this.$refs['w-list'].$el.querySelector(`#w-select-menu--${this._uid}_item-${itemIndex + 1}`).focus()
       }, 100)
     },
 
@@ -327,11 +327,11 @@ export default {
   },
 
   created () {
-    this.inputValue = this.checkSelection(this.modelValue)
+    this.inputValue = this.checkSelection(this.value)
   },
 
   watch: {
-    modelValue (value) {
+    value (value) {
       if (value !== this.inputValue) this.inputValue = this.checkSelection(value)
     }
   }

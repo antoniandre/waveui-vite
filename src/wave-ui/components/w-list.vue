@@ -6,23 +6,8 @@ ul.w-list(:class="classes")
     :class="{ 'w-list__item--parent': (li.children || []).length }")
     w-icon.w-list__item-bullet(v-if="icon") {{ icon }}
 
-    //- List items.
-    component.w-list__item-label(
-      v-if="$slots[`item.${i + 1}`] || $slots.item || $slots.default"
-      :is="checklist ? 'w-checkbox' : (nav && !li.disabled && li.route ? (hasRouter ? 'router-link' : 'a') : 'div')"
-      v-bind="liLabelProps(li, i, li._selected)")
-      slot(v-if="$slots[`item.${i + 1}`]" :name="`item.${i + 1}`" :item="cleanLi(li)" :index="i + 1" :selected="li._selected")
-      slot(v-else-if="$slots.item" name="item" :item="cleanLi(li)" :index="i + 1" :selected="li._selected")
-      slot(v-else :item="cleanLi(li)" :index="i + 1" :selected="li._selected") {{ li._label }}
-    component.w-list__item-label(
-      v-else
-      :is="checklist ? 'w-checkbox' : (nav && !li.disabled && li.route ? (hasRouter ? 'router-link' : 'a') : 'div')"
-      v-bind="liLabelProps(li, i, li._selected)")
-
-    //- Vue 2.x only. Keep this comment to simplify the master branch merge into next.
-    //-----------------------------------------------------
     //- When there are slots.
-    //- template(v-if="$scopedSlots[`item.${i + 1}`] || $scopedSlots.item || $scopedSlots.default")
+    template(v-if="$scopedSlots[`item.${i + 1}`] || $scopedSlots.item || $scopedSlots.default")
       //- Checklist items. (separated case cz it needs a @click.native, can't be in v-on)
       w-checkbox.w-list__item-label(
         v-if="checklist"
@@ -52,7 +37,7 @@ ul.w-list(:class="classes")
         slot(v-else :item="cleanLi(li)" :index="i + 1" :selected="li._selected") {{ li._label }}
 
     //- When there are no slots.
-    //- template(v-else)
+    template(v-else)
       //- Checklist items. (separated case cz it needs a @click.native, can't be in v-on)
       w-checkbox.w-list__item-label(
         v-if="checklist"
@@ -73,7 +58,6 @@ ul.w-list(:class="classes")
         v-bind="liLabelProps(li, i, li._selected)"
         v-on="liLabelEvents(li)"
         v-html="li._label")
-    //-----------------------------------------------------
 
     //- Children lists.
     w-list(
@@ -81,13 +65,12 @@ ul.w-list(:class="classes")
       v-bind="$props"
       :items="li.children"
       :depth="depth + 1"
-      @update:model-value="$emit('update:modelValue', $event)"
-      @input="$emit('input', $event)"
-      @item-click="$emit('item-click', $event)"
+      @update:model-value="$emit('update:modelValue', $event)",
+      @input="$emit('input', $event)",
       @item-select="$emit('item-select', $event)")
       //- template(#item.x="{ item, index, selected }")
-        slot(v-if="$slots[`item.${i + 1}`]" :name="`item.${i + 1}`" :item="cleanLi(item)" :index="index" :selected="selected")
-      template(v-if="$slots.item" #item="{ item, index, selected }")
+        slot(v-if="$scopedSlots[`item.${i + 1}`]" :name="`item.${i + 1}`" :item="cleanLi(item)" :index="index" :selected="selected")
+      template(v-if="$scopedSlots.item" #item="{ item, index, selected }")
         slot(name="item" :item="cleanLi(item)" :index="index" :selected="selected")
       template(v-else #default="{ item, index, selected }")
         slot(:item="cleanLi(item)" :index="index" :selected="selected") {{ item[itemLabelKey] }}
@@ -99,7 +82,7 @@ export default {
 
   props: {
     items: { type: [Array, Number], required: true }, // All the possible options.
-    modelValue: {}, // v-model on selected item if any.
+    value: {}, // v-model on selected item if any.
     checklist: { type: Boolean },
     roundCheckboxes: { type: Boolean }, // Checklist option.
     // If selectable (if value !== false), this allows multiple selections.
@@ -138,7 +121,7 @@ export default {
     },
 
     listId () {
-      return this.addIds ? (typeof this.addIds === 'string' ? this.addIds : `w-list--${this._.uid}`) : null
+      return this.addIds ? (typeof this.addIds === 'string' ? this.addIds : `w-list--${this.uid}`) : null
     },
 
     selectedItems () {
@@ -155,7 +138,7 @@ export default {
     },
 
     isSelectable () {
-      return this.modelValue !== undefined || this.checklist || this.nav
+      return this.value !== undefined || this.checklist || this.nav
     },
 
     SelectionColor () {
@@ -216,8 +199,47 @@ export default {
     },
 
     liLabelProps (li, index, selected) {
-      const hasSlot = this.$slots[`item.${index + 1}`] || this.$slots.item
+      const props = {
+        class: this.liLabelClasses(li),
+        tabindex: li.disabled || this.checklist ? null : '0',
+        'aria-selected': selected ? 'true' : 'false',
+        id: this.listId ? `${this.listId}_item-${index + 1}` : null,
+        role: 'option'
+      }
 
+      // Checklist.
+      // ------------------------------------------------------
+      if (this.checklist) {
+        props.value = li._selected
+        props.color = li[this.itemColorKey] || this.color
+        props.round = this.roundCheckboxes
+        props.disabled = li.disabled
+
+        const hasSlot = this.$scopedSlots[`item.${index + 1}`] || this.$scopedSlots.item
+        if (!hasSlot) props.label = li._label || null
+      }
+      // ------------------------------------------------------
+
+      // Navigation list.
+      // Note: on enter key press, a click event is fired => this is default HTML behavior.
+      // ------------------------------------------------------
+      else if (this.nav && !li.disabled && li.route) {
+        if (this.$router) props.to = li.route
+        else props.href = li.route
+      }
+      // ------------------------------------------------------
+
+      // Selectable simple div.
+      // ------------------------------------------------------
+      // Links are naturally tabable, add tabindex on other elements.
+      else if (this.isSelectable && !li.disabled) props.tabindex = 0
+      // ------------------------------------------------------
+
+      return props
+    },
+
+    // Only separated from `liLabelProps` for Vue 2.
+    liLabelEvents (li) {
       // Event handlers.
       // ------------------------------------------------------
       const click = () => {
@@ -251,88 +273,39 @@ export default {
       })
       // ------------------------------------------------------
 
-      const props = {
-        class: this.liLabelClasses(li),
-        tabindex: li.disabled || this.checklist ? null : '0',
-        'aria-selected': selected ? 'true' : 'false',
-        id: this.listId ? `${this.listId}_item-${index + 1}` : null,
-        role: 'option'
-      }
+      const events = {}
 
-      // Checklist.
-      // ------------------------------------------------------
-      if (this.checklist) {
-        props.modelValue = li._selected
-        props.color = li[this.itemColorKey] || this.color
-        props.round = this.roundCheckboxes
-        props.disabled = li.disabled
-
-        if (!hasSlot) props.label = li._label || null
-
-        props.onFocus = () => (li._focused = true)
-        props.onBlur = () => (li._focused = false)
-        props.onInput = value => this.selectItem(li, value)
-        // When clicking on the checkbox component wrapper, trigger a focus & click on the checkbox.
-        props.onClick = e => {
-          const checkbox = e.target.querySelector('input[type="checkbox"]')
-          if (checkbox) {
-            checkbox.focus()
-            checkbox.click()
-          }
-
-          click() // Emit the `item-click` & `item-select` events.
-        }
-      }
-      // ------------------------------------------------------
-
-      // Navigation list.
-      // Note: on enter key press, a click event is fired => this is default HTML behavior.
-      // ------------------------------------------------------
-      else if (this.nav) {
+      if (this.nav) {
         if (!li.disabled && li.route) {
-          props.onKeydown = keydown
-          props.onMousedown = mousedown
-
-          if (this.$router) {
-            props.to = li.route
-            // In HTML5 history mode, Vue 3 router-link will intercept the click event so that the browser
-            // doesn't try to reload the page.
-            // (in Vue 2, the click event was on `nativeOn`, since in Vue 3 the component options/props
-            // definitions are flattened the issue appears)
-            // So in Vue 3, we can either use the custom prop and pass a default slot and create the
-            // `a` link ourselves, or call preventDefault & `$router.push` directly which is done
-            // internally by vue-router.
-            props.onClick = e => {
-              e.preventDefault()
-              this.$router.push(li.route)
-              click() // Emit the `item-click` & `item-select` events.
-            }
-          }
-          else {
-            props.href = li.route
-            props.onClick = click
-          }
+          events.keydown = keydown
+          events.mousedown = mousedown
+          if (!this.$router) events.click = click
         }
-
-        if (!hasSlot) props.innerHTML = li._label
       }
-      // ------------------------------------------------------
 
-      // Selectable simple div.
-      // ------------------------------------------------------
-      else if (this.isSelectable) {
-        // Links are naturally tabable, add tabindex on other elements.
-        if (!li.disabled) props.tabindex = 0
-        props.onClick = click
-        props.onKeydown = keydown
-        props.onMousedown = mousedown
-        if (!hasSlot) props.innerHTML = li._label
+      else if (this.checklist) {
+        events.focus = () => (li._focused = true)
+        events.blur = () => (li._focused = false)
+        events.input = value => this.selectItem(li, value)
       }
-      // ------------------------------------------------------
 
-      else if (!hasSlot) props.innerHTML = li._label
+      else if (this.isSelectable && !li.disabled) {
+        events.click = click
+        events.keydown = keydown
+        events.mousedown = mousedown
+      }
 
-      return props
+      return events
+    },
+
+    // When clicking on the checkbox component wrapper, trigger a focus & click on the checkbox.
+    // Only separated from `liLabelProps` for Vue 2.
+    onCheckboxWrapperClick (e) {
+      const checkbox = e.target.querySelector('input[type="checkbox"]')
+      if (checkbox) {
+        checkbox.focus()
+        checkbox.click()
+      }
     },
 
     // Convert the received items selection to array if it is a unique value.
@@ -401,16 +374,16 @@ export default {
 
   created () {
     this.refreshListItems()
-    this.applySelectionOnItems(this.modelValue)
+    this.applySelectionOnItems(this.value)
   },
 
   watch: {
     items () {
       this.refreshListItems()
-      this.applySelectionOnItems(this.modelValue)
+      this.applySelectionOnItems(this.value)
     },
 
-    modelValue (items) {
+    value (items) {
       this.applySelectionOnItems(items)
     },
 

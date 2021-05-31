@@ -3,7 +3,7 @@
   template(v-for="(item, i) in items")
     //- Separator.
     span.w-breadcrumbs__separator(
-      v-if="i && $slots.separator"
+      v-if="i && $scopedSlots.separator"
       :key="`${i}a`"
       :class="separatorColor")
       slot(name="separator" :index="i")
@@ -15,13 +15,13 @@
     //- Link to parent pages.
     template(v-if="item[itemRouteKey] && (i < items.length - 1 || linkLastItem)")
       component.w-breadcrumbs__item(
-        v-if="$slots.item"
+        v-if="$scopedSlots.item"
         :key="`${i}c`"
         :is="hasRouter ? 'router-link' : 'a'"
         :to="hasRouter && item[itemRouteKey]"
         :href="item[itemRouteKey]"
         :class="color || null")
-        slot(name="item" :item="item" :index="i + 1" :isLast="i === items.length - 1")
+        slot(name="item" :item="item" :index="i + 1" :is-last="i === items.length - 1")
       component.w-breadcrumbs__item(
         v-else
         :key="`${i}d`"
@@ -33,8 +33,7 @@
 
     //- Current page when linkLastItem is false.
     slot(
-      v-else-if="$slots.item"
-      :key="`${i}e`"
+      v-else-if="$scopedSlots.item"
       name="item"
       :item="item"
       :index="i + 1"

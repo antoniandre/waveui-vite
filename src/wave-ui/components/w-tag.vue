@@ -1,16 +1,16 @@
 <template lang="pug">
 span.w-tag(
-  v-on="$attrs"
-  @click="$emit('update:modelValue', !modelValue);$emit('input', !modelValue)"
-  @keypress.enter="$emit('update:modelValue', !modelValue);$emit('input', !modelValue)"
+  v-on="$listeners"
+  @click="$emit('update:modelValue', !value);$emit('input', !value)"
+  @keypress.enter="$emit('update:modelValue', !value);$emit('input', !value)"
   :class="classes"
-  :role="modelValue !== -1 && 'button'"
-  :aria-pressed="modelValue !== -1 && (modelValue ? 'true' : 'false')"
-  :tabindex="modelValue !== -1 && 0"
+  :role="value !== -1 && 'button'"
+  :aria-pressed="value !== -1 && (value ? 'true' : 'false')"
+  :tabindex="value !== -1 && 0"
   :style="styles")
   slot
   i(
-    v-if="closable && modelValue"
+    v-if="closable && value"
     @click.stop="$emit('update:modelValue', false);$emit('input', false)"
     role="icon"
     aria-hidden="true"
@@ -22,7 +22,7 @@ export default {
   name: 'w-tag',
 
   props: {
-    modelValue: { type: [Boolean, Number], default: -1 },
+    value: { type: [Boolean, Number], default: -1 },
     color: { type: String },
     bgColor: { type: String },
     dark: { type: Boolean },
@@ -59,7 +59,7 @@ export default {
         [`${this.bgColor}--bg`]: this.bgColor,
         [`size--${this.presetSize}`]: true,
         'w-tag--dark': this.dark && !this.outline,
-        'w-tag--clickable': this.modelValue !== -1,
+        'w-tag--clickable': this.value !== -1,
         'w-tag--outline': this.outline,
         'w-tag--no-border': this.noBorder || this.shadow,
         'w-tag--tile': this.tile,

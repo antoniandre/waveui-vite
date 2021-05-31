@@ -21,7 +21,7 @@ export default {
 
   computed: {
     inputName () {
-      return this.name || `${this.$options.name}--${this._.uid}`
+      return this.name || `${this.$options.name}--${this._uid}`
     },
     isDisabled () {
       return this.disabled || this.formProps.disabled

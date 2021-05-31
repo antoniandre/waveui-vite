@@ -47,11 +47,11 @@ export default {
 
   created () {
     githubBackers.forEach((backer, i) => {
-      this.backers[i] = {
+      this.$set(this.backers, i, {
         username: backer,
         avatar: '',
         url: `https://github.com/${backer}`
-      }
+      })
       axios.get(`https://api.github.com/users/${backer}`).then(response => {
         this.backers[i].avatar = response.data.avatar_url
       })

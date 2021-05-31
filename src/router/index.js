@@ -1,12 +1,13 @@
-import { reactive } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import GettingStarted from '@/documentation/views/getting-started/index.vue'
 import Home from '@/documentation/views/home.vue'
 
+Vue.use(VueRouter)
 // The loading state of Vue Router is appended to $router, so a
 // spinner can be shown while loading. This status needs to be reactive, it is
 // set to true on beforeRoute and false on afterRoute.
-const status = reactive({ loading: true })
+const status = Vue.observable({ loading: true })
 
 const routes = [
   {
@@ -172,13 +173,14 @@ externalComponents.forEach(item => {
 
 // Keep this route last!
 routes.push({
-  path: '/:pathMatch(.*)',
+  path: '/*',
   name: 'not-found',
   component: () => import('@/documentation/views/404.vue')
 })
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes
 })
 

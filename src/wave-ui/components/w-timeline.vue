@@ -1,7 +1,7 @@
 <template lang="pug">
 ul.w-timeline
   li.w-timeline-item(v-for="(item, i) in items" :key="i")
-    component.w-timeline-item__bullet(
+    .w-timeline-item__bullet(
       :is="item[itemIconKey] || icon ? 'w-icon' : 'div'"
       :class="{ [item[itemColorKey] || color]: item[itemColorKey] || color }")
       | {{ item[itemIconKey] || icon }}

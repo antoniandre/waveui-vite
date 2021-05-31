@@ -1,32 +1,26 @@
-import { createApp } from 'vue'
+import Vue from 'vue'
 import App from './app.vue'
-import router from './router'
-import WaveUI from 'wave-ui'
-import 'wave-ui/dist/wave-ui.css'
+import router from './router/index.js'
+import WaveUI from '@/wave-ui/index.js'
 import '@mdi/font/css/materialdesignicons.min.css'
 
-import SshPre from 'simple-syntax-highlighter'
-import 'simple-syntax-highlighter/dist/sshpre.css'
-import TitleLink from '@/documentation/components/title-link.vue'
-import IssueLink from '@/documentation/components/issue-link.vue'
-import UiComponentTitle from '@/documentation/components/ui-component-title.vue'
-import Example from '@/documentation/components/example.vue'
-import Alert from '@/documentation/components/alert.vue'
-import Api from '@/documentation/components/api.vue'
+Vue.config.productionTip = false
 
-const app = createApp(App)
-app.use(router)
+Vue.use(WaveUI)
 
-new WaveUI(app, {
-  // Some Wave UI options.
+const waveui = new WaveUI({
+  colors: {
+    primary: '#234781',
+    secondary: '#d3ebff'
+  },
+  presets: {
+    // @todo.
+    // 'w-button': {}
+  }
 })
 
-app.component('ssh-pre', SshPre)
-app.component('title-link', TitleLink)
-app.component('ui-component-title', UiComponentTitle)
-app.component('example', Example)
-app.component('alert', Alert)
-app.component('component-api', Api) // The `api` keyword in template crashes Vue 3.
-app.component('issue-link', IssueLink)
-
-app.mount('#app')
+new Vue({
+  router,
+  waveui,
+  render: h => h(App)
+}).$mount('#app')

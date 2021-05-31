@@ -13,7 +13,7 @@
             :class="headerSortClasses(header)") wi-arrow-down
           template(v-if="header.label")
             slot(
-              v-if="$slots['header-label']"
+              v-if="$scopedSlots['header-label']"
               name="header-label"
               :header="header"
               :label="header.label"
@@ -29,9 +29,9 @@
           .w-table__loading-text
             slot(name="loading") Loading...
       template(v-else-if="tableItems.length")
-        template(v-for="(item, i) in sortedItems" :key="i")
+        template(v-for="(item, i) in sortedItems")
           slot(
-            v-if="$slots.item"
+            v-if="$scopedSlots['item']"
             name="item"
             :item="item"
             :index="i + 1"
@@ -40,30 +40,31 @@
 
           tr.w-table__row(
             v-else
+            :key="i"
             @click="doSelectRow(item, i)"
             :class="{ 'w-table__row--selected': selectedRowsByUid[item._uid] !== undefined, 'w-table__row--has-expanded': expandedRowsByUid[item._uid] !== undefined }")
             template(v-for="(header, j) in headers")
               td.w-table__cell(
-                v-if="$slots[`item-cell.${header.key}`] || $slots[`item-cell.${j + 1}`] || $slots['item-cell']"
+                v-if="$scopedSlots[`item-cell.${header.key}`] || $scopedSlots[`item-cell.${j + 1}`] || $scopedSlots['item-cell']"
                 :key="`${j}-a`"
                 :data-label="header.label"
                 :class="`text-${header.align || 'left'}`")
                 slot(
-                  v-if="$slots[`item-cell.${header.key}`]"
+                  v-if="$scopedSlots[`item-cell.${header.key}`]"
                   :name="`item-cell.${header.key}`"
                   :header="header"
                   :item="item"
                   :label="item[header.key] || ''"
                   :index="i + 1")
                 slot(
-                  v-else-if="$slots[`item-cell.${j + 1}`]"
+                  v-else-if="$scopedSlots[`item-cell.${j + 1}`]"
                   :name="`item-cell.${j + 1}`"
                   :header="header"
                   :item="item"
                   :label="item[header.key] || ''"
                   :index="i + 1")
                 slot(
-                  v-else-if="$slots['item-cell']"
+                  v-else-if="$scopedSlots['item-cell']"
                   name="item-cell"
                   :header="header"
                   :item="item"
@@ -234,7 +235,7 @@ export default {
         this.activeSorting = []
         return this.$emit('update:sort')
       }
-      else this.activeSorting[0] = (alreadySortingThis ? '-' : '+') + header.key
+      else this.$set(this.activeSorting, 0, (alreadySortingThis ? '-' : '+') + header.key)
 
       this.$emit('update:sort', this.activeSorting)
     },

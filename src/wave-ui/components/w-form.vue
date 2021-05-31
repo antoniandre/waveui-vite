@@ -28,7 +28,7 @@ export default {
   },
 
   props: {
-    modelValue: {},
+    value: {},
     allowSubmit: { type: Boolean },
     noKeyupValidation: { type: Boolean },
     noBlurValidation: { type: Boolean },
@@ -72,7 +72,7 @@ export default {
     },
 
     unregister (formElement) {
-      this.formElements = this.formElements.filter(item => item._.uid !== formElement._.uid)
+      this.formElements = this.formElements.filter(item => item._uid !== formElement._uid)
     },
 
     /**
@@ -142,8 +142,8 @@ export default {
     reset (e) {
       // Reset is called from:
       //   - the form `reset` event listener
-      //   - the modelValue watcher when set to `null`.
-      // Prevent resetting twice on form reset that sets the modelValue to null.
+      //   - the value watcher when set to `null`.
+      // Prevent resetting twice on form reset that sets the value to null.
       if (!e) return
       this.status = null
 
@@ -170,11 +170,11 @@ export default {
   },
 
   created () {
-    this.status = this.modelValue || null
+    this.status = this.value || null
   },
 
   watch: {
-    modelValue (value) {
+    value (value) {
       // When user clicks the reset button, reset the errors in each form element.
       if ((this.status === false && value) || (value === null && this.status !== null)) this.reset()
       this.status = value

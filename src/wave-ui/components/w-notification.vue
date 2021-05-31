@@ -1,7 +1,7 @@
 <template lang="pug">
 transition(:name="transitionName" appear)
   .w-notification(v-if="show" :class="classes" :style="styles")
-    w-alert(v-bind="alertProps" @update:model-value="$emit('update:modelValue', false);$emit('input', false)")
+    w-alert(v-bind="alertProps" @input="$emit('update:modelValue', false);$emit('input', false)")
       slot
 </template>
 
@@ -11,7 +11,7 @@ export default {
 
   props: {
     // Notification props.
-    modelValue: { default: true }, // Show or hide.
+    value: { default: true }, // Show or hide.
     transition: { type: [String, Boolean], default: '' },
     timeout: { type: [Number, String], default: 0 },
     absolute: { type: Boolean },
@@ -49,7 +49,7 @@ export default {
 
   data () {
     return {
-      show: this.modelValue,
+      show: this.value,
       timeoutId: null
     }
   },
@@ -81,7 +81,7 @@ export default {
 
     alertProps () {
       return {
-        modelValue: this.show,
+        value: this.show,
         success: this.success,
         info: this.info,
         warning: this.warning,
@@ -136,11 +136,11 @@ export default {
   },
 
   created () {
-    if (this.modelValue && this.timeoutVal) this.countdown()
+    if (this.value && this.timeoutVal) this.countdown()
   },
 
   watch: {
-    modelValue (value) {
+    value (value) {
       clearTimeout(this.timeoutId)
       this.show = value
 

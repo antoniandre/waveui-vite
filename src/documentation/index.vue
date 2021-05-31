@@ -45,14 +45,35 @@ w-app
 </template>
 
 <script>
+import Vue from 'vue'
+import SshPre from 'simple-syntax-highlighter'
+import 'simple-syntax-highlighter/dist/sshpre.css'
+import TitleLink from '@/documentation/components/title-link.vue'
+import IssueLink from '@/documentation/components/issue-link.vue'
+import UiComponentTitle from '@/documentation/components/ui-component-title.vue'
+import Example from '@/documentation/components/example.vue'
+import Api from '@/documentation/components/api.vue'
+import Alert from '@/documentation/components/alert.vue'
 import Toolbar from '@/documentation/components/toolbar.vue'
 import NavMenu from '@/documentation/components/nav-menu.vue'
 import '@/documentation/scss/index.scss'
 
+Vue.component('ssh-pre', SshPre)
+Vue.component('title-link', TitleLink)
+Vue.component('ui-component-title', UiComponentTitle)
+Vue.component('example', Example)
+Vue.component('alert', Alert)
+Vue.component('component-api', Api)
+Vue.component('issue-link', IssueLink)
+
 export default {
   components: { Toolbar, NavMenu },
   data: () => ({
-    drawerOpen: false
+    drawerOpen: false,
+    fixNavMenu: false,
+    navMenuTop: 0,
+    scrollingEl: null,
+    contentWrapEl: null
   }),
 
   computed: {
@@ -63,6 +84,29 @@ export default {
     isMobile () {
       return this.$waveui.breakpoint.xs
     }
+  },
+
+  methods: {
+    onScroll () {
+      this.fixNavMenu = this.scrollingEl.scrollTop >= this.navMenuTop
+    },
+    onResize () {
+      this.navMenuTop = this.contentWrapEl.offsetTop - 12
+    }
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.onScroll)
+    window.removeEventListener('resize', this.onResize)
+  },
+
+  mounted () {
+    this.contentWrapEl = document.querySelector('.content-wrap')
+    this.navMenuTop = this.contentWrapEl.offsetTop - 12
+    this.scrollingEl = document.documentElement
+
+    window.addEventListener('scroll', this.onScroll)
+    window.addEventListener('resize', this.onResize)
   }
 }
 </script>

@@ -3,12 +3,12 @@ component(
   ref="formEl"
   :is="formRegister ? 'w-form-element' : 'div'"
   v-bind="formRegister && { validators, inputValue: isOn, disabled: isDisabled, readonly: isReadonly }"
-  v-model:valid="valid"
+  :valid.sync="valid"
   @reset="$emit('update:modelValue', isOn = null);$emit('input', null)"
   :class="classes")
   input(
     ref="input"
-    :id="`w-switch--${_.uid}`"
+    :id="`w-switch--${_uid}`"
     type="checkbox"
     :name="inputName"
     :checked="isOn"
@@ -21,16 +21,16 @@ component(
     :aria-checked="isOn || 'false'"
     role="switch")
   template(v-if="hasLabel && labelOnLeft")
-    label.w-switch__label.w-form-el-shakable(v-if="$slots.default" :for="`w-switch--${_.uid}`")
+    label.w-switch__label.w-form-el-shakable(v-if="$slots.default" :for="`w-switch--${_uid}`")
       slot
-    label.w-switch__label.w-form-el-shakable(v-else-if="label" :for="`w-switch--${_.uid}`" v-html="label")
+    label.w-switch__label.w-form-el-shakable(v-else-if="label" :for="`w-switch--${_uid}`" v-html="label")
   .w-switch__input(
     @click="$refs.input.focus();$refs.input.click()"
     :class="[[this.color], hasLabel ? (thin ? 'mr3' : 'mr2') : '']")
   template(v-if="hasLabel && !labelOnLeft")
-    label.w-switch__label.w-form-el-shakable(v-if="$slots.default" :for="`w-switch--${_.uid}`")
+    label.w-switch__label.w-form-el-shakable(v-if="$slots.default" :for="`w-switch--${_uid}`")
       slot
-    label.w-switch__label.w-form-el-shakable(v-else-if="label" :for="`w-switch--${_.uid}`" v-html="label")
+    label.w-switch__label.w-form-el-shakable(v-else-if="label" :for="`w-switch--${_uid}`" v-html="label")
 </template>
 
 <script>
@@ -41,7 +41,7 @@ export default {
   mixins: [FormElementMixin],
 
   props: {
-    modelValue: { default: false }, // v-model.
+    value: { default: false }, // v-model.
     label: { type: String, default: '' },
     labelOnLeft: { type: Boolean },
     color: { type: String, default: 'primary' },
@@ -55,7 +55,7 @@ export default {
 
   data () {
     return {
-      isOn: this.modelValue,
+      isOn: this.value,
       ripple: {
         start: false,
         end: false,
@@ -66,7 +66,7 @@ export default {
 
   computed: {
     hasLabel () {
-      return this.label || this.$slots.default
+      return (this.$slots.default && this.$slots.default.length) || this.label
     },
     classes () {
       return {
@@ -104,7 +104,7 @@ export default {
   },
 
   watch: {
-    modelValue (value) {
+    value (value) {
       this.isOn = value
     }
   }

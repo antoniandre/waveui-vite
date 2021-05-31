@@ -1,4 +1,3 @@
-import { reactive } from 'vue'
 import config, { mergeConfig } from './utils/config'
 import colors from './utils/colors'
 // import * as directives from './directives'
@@ -33,12 +32,12 @@ export default class WaveUI {
     return obj
   }, { ...config.colors, black: '#000', white: '#fff', transparent: 'transparent', inherit: 'inherit' })
 
-  static install (app, options = {}) {
+  static install (Vue, options = {}) {
     // Register directives.
     // for (const id in directives) {
-    //   if (directives[id]) app.directive(id, directives[id])
+    //   if (directives[id]) Vue.directive(id, directives[id])
     // }
-    app.directive('focus', {
+    Vue.directive('focus', {
       // When the bound element is inserted into the DOM...
       inserted: el => el.focus()
     })
@@ -47,32 +46,31 @@ export default class WaveUI {
     const { components = {} } = options || {}
     for (let id in components) {
       const component = components[id]
-      app.component(component.name, component)
+      Vue.component(component.name, component)
     }
 
     // Register mixins.
-    // app.mixin({
+    // Vue.mixin({
     //   mounted () {
     //   }
     // })
 
-    WaveUI.registered = true
+    // Save the Vue instance for use in the constructor.
+    WaveUI.vueInstance = Vue
   }
 
   // Singleton.
-  constructor (app, options = {}) {
+  constructor (options = {}) {
     if (WaveUI.instance) return WaveUI.instance
 
     else {
-      if (!WaveUI.registered) app.use(WaveUI)
-
       // Merge user options into the default config.
       mergeConfig(options)
 
       // @todo: remove this warning in version 1.40+.
       if (config.disableColorShades) {
         consoleWarn(
-          'WARNING - Since version 1.30 (Vue 2) & 2.17 (Vue 3), the option `disableColorShades` is replaced with `css.colorShades`.\n' +
+          'WARNING - Since version 1.30, the option `disableColorShades` is replaced with `css.colorShades`.\n' +
           'https://antoniandre.github.io/wave-ui/release-notes'
         )
       }
@@ -103,7 +101,9 @@ export default class WaveUI {
 
       WaveUI.instance = this
       // Make waveui reactive and expose the single instance in Vue.
-      app.config.globalProperties.$waveui = reactive(this)
+      WaveUI.vueInstance.prototype.$waveui = WaveUI.vueInstance.observable(this)
+
+      delete WaveUI.vueInstance // Get rid of the Vue instance that we don't need anymore.
     }
   }
 }

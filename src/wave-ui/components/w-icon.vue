@@ -2,7 +2,7 @@
 component.w-icon(
   :is="tag || 'i'"
   :class="classes"
-  v-on="$attrs"
+  v-on="$listeners"
   role="icon"
   aria-hidden="true"
   :style="styles")
@@ -90,13 +90,11 @@ export default {
   },
 
   created () {
-    const { default: slotContent } = this.$slots
-    this.icon = slotContent ? (slotContent()[0].children || '').trim() : ''
+    this.icon = this.$slots.default[0].text.trim() || ''
   },
 
   beforeUpdate () {
-    const { default: slotContent } = this.$slots
-    this.icon = slotContent ? (slotContent()[0].children || '').trim() : ''
+    this.icon = this.$slots.default[0].text.trim()
   }
 }
 </script>

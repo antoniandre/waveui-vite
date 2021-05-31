@@ -3,23 +3,23 @@ component(
   ref="formEl"
   :is="formRegister ? 'w-form-element' : 'div'"
   v-bind="formRegister && { validators, inputValue, disabled: isDisabled, readonly: isReadonly, isFocused }"
-  v-model:valid="valid"
+  :valid.sync="valid"
   @reset="$emit('update:modelValue', inputValue = '');$emit('input', '')"
   :class="classes")
   input(v-if="type === 'hidden'" type="hidden" :name="name || null" v-model="inputValue")
   template(v-else)
     //- Left label.
     template(v-if="labelPosition === 'left'")
-      label.w-input__label.w-input__label--left.w-form-el-shakable(v-if="$slots.default" :for="`w-input--${_.uid}`")
+      label.w-input__label.w-input__label--left.w-form-el-shakable(v-if="$slots.default" :for="`w-input--${_uid}`")
         slot
-      label.w-input__label.w-input__label--left.w-form-el-shakable(v-else-if="label" :for="`w-input--${_.uid}`" v-html="label")
+      label.w-input__label.w-input__label--left.w-form-el-shakable(v-else-if="label" :for="`w-input--${_uid}`" v-html="label")
 
     //- Input wrapper.
     .w-input__input-wrap(:class="inputWrapClasses")
       w-icon.w-input__icon.w-input__icon--inner-left(
         v-if="innerIconLeft"
         tag="label"
-        :for="`w-input--${_.uid}`"
+        :for="`w-input--${_uid}`"
         @click="$emit('click:inner-icon-left', $event)") {{ innerIconLeft }}
       input.w-input__input(
         v-model="inputValue"
@@ -27,7 +27,7 @@ component(
         @input="onInput"
         @focus="onFocus"
         @blur="onBlur"
-        :id="`w-input--${_.uid}`"
+        :id="`w-input--${_uid}`"
         :type="type"
         :name="inputName"
         :placeholder="placeholder || null"
@@ -40,34 +40,29 @@ component(
         :aria-readonly="isReadonly ? 'true' : 'false'"
         :disabled="isDisabled || null"
         :required="required || null"
-        v-bind="attrs")
+        v-bind="$attrs")
       template(v-if="labelPosition === 'inside' && showLabelInside")
         label.w-input__label.w-input__label--inside.w-form-el-shakable(
           v-if="$slots.default"
-          :for="`w-input--${_.uid}`"
+          :for="`w-input--${_uid}`"
           :class="isFocused && { [valid === false ? 'error' : color]: color || valid === false }")
           slot
         label.w-input__label.w-input__label--inside.w-form-el-shakable(
           v-else-if="label"
-          :for="`w-input--${_.uid}`"
+          :for="`w-input--${_uid}`"
           v-html="label"
           :class="isFocused && { [valid === false ? 'error' : color]: color || valid === false }")
       w-icon.w-input__icon.w-input__icon--inner-right(
         v-if="innerIconRight"
         tag="label"
-        :for="`w-input--${_.uid}`"
+        :for="`w-input--${_uid}`"
         @click="$emit('click:inner-icon-right', $event)") {{ innerIconRight }}
 
     //- Right label.
     template(v-if="labelPosition === 'right'")
-      label.w-input__label.w-input__label--right.w-form-el-shakable(
-        v-if="$slots.default"
-        :for="`w-input--${_.uid}`")
+      label.w-input__label.w-input__label--right.w-form-el-shakable(v-if="$slots.default" :for="`w-input--${_uid}`")
         slot
-      label.w-input__label.w-input__label--right.w-form-el-shakable(
-        v-else-if="label"
-        :for="`w-input--${_.uid}`"
-        v-html="label")
+      label.w-input__label.w-input__label--right.w-form-el-shakable(v-else-if="label" :for="`w-input--${_uid}`" v-html="label")
 
     w-progress.fill-width(v-if="loading" size="2" :color="progressColor || color")
 </template>
@@ -84,7 +79,7 @@ export default {
   mixins: [FormElementMixin],
 
   props: {
-    modelValue: { default: '' },
+    value: { default: '' },
     type: { type: String, default: 'text' },
     label: { type: String },
     labelPosition: { type: String, default: 'inside' },
@@ -115,7 +110,7 @@ export default {
 
   data () {
     return {
-      inputValue: this.modelValue,
+      inputValue: this.value,
       // In case of incorrect input type="number", the inputValue gets emptied,
       // and the label would come back on top of the input text.
       inputNumberError: false,
@@ -127,13 +122,8 @@ export default {
     listeners () {
       // Remove the events that are fired separately, so they don't fire twice.
       // eslint-disable-next-line no-unused-vars
-      const { input, focus, blur, ...listeners } = this.$attrs
+      const { input, focus, blur, ...listeners } = this.$listeners
       return listeners
-    },
-    attrs () {
-      // eslint-disable-next-line no-unused-vars
-      const { class: Class, ...htmlAttrs } = this.$attrs
-      return htmlAttrs
     },
     hasValue () {
       return this.inputValue || ['date', 'time'].includes(this.type) || (this.type === 'number' && this.inputNumberError)
@@ -192,7 +182,7 @@ export default {
   },
 
   watch: {
-    modelValue (value) {
+    value (value) {
       this.inputValue = value
     }
   }

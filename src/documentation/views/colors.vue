@@ -107,13 +107,14 @@ main
       .color-palette.ma2(
         v-for="({ color, label, shades }, j) in colors"
         :key="j")
-        template(v-for="(shade, i) in shades" :key="i")
+        template(v-for="(shade, i) in shades")
           //- top color.
           .color.color--top(v-if="i === 5" :class="`${label}--bg`")
             span {{ label }}
             small {{ color }}
           //- shades colors.
           .color.color--shade(
+            :key="i"
             :class="[`${shade.label}--bg`, i >= 5 ? 'color--darker' : '']")
             span {{ shade.label }}
             small {{ shade.color }}
