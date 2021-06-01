@@ -16,6 +16,7 @@ ___
   - [x] path aliases
 - [x] Run `build` the library & test in Vue 3 project
 - [x] npm pack & test lib
+- [ ] Test Vue 2 lib build
 
 ### Documentation
 - [x] Run `dev` the documentation & test
@@ -24,4 +25,5 @@ ___
 - [x] Preserve whitespaces
 - [x] Test the documentation on Github
 - [x] Test test the redirection ghspa script on Github
+- [/] Create 2 branches & test Vue 2
 - [ ] Try Vite SSR
