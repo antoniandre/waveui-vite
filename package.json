@@ -19,8 +19,10 @@
     "*.scss",
     "*.vue"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "vue": "^2.6.12"
+  },
+  "dependencies": {
   },
   "devDependencies": {
     "@mdi/font": "^5.9.55",

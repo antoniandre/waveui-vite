@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import del from 'rollup-plugin-delete'
 import { createVuePlugin } from 'vite-plugin-vue2'
