@@ -11,9 +11,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base /waveui-vite/",
-    "build-bundle": "BUNDLE=true vite build",
+    "build-bundle": "BUNDLE=true vite build && mv ./dist/style.css ./dist/wave-ui.css",
     "serve": "vite preview --root docs --base /waveui-vite/"
   },
+  "sideEffects": [
+    "*.css",
+    "*.scss",
+    "*.vue"
+  ],
   "dependencies": {
     "vue": "^2.6.12"
   },
