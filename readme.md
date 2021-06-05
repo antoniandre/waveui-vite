@@ -16,7 +16,8 @@ ___
   - [x] path aliases
 - [x] Run `build` the library & test in Vue 3 project
 - [x] npm pack & test lib
-- [-] Test Vue 2 lib build
+- [x] Add side-effects config & rename CSS output to wave-ui.css
+- [x] Test Vue 2 lib build
 
 ### Documentation
 - [x] Run `dev` the documentation & test
